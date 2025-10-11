@@ -9,6 +9,18 @@ const app = new Hono<{
     JWT_SECRET:string
 	}
 }>();
+app.use('/api/v1/blog/*', async (c, next) => {
+	const header=c.req.header("Authorization")||"";
+	const token=header.split(" ")[1];
+	const response=await verify(token,c.env.JWT_SECRET);
+	if(response.id)
+	{
+      await next()
+	}
+	c.status(403);
+	return c.json({error:"unauthorized"});
+  
+})
 app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
@@ -34,9 +46,28 @@ app.post('/api/v1/user/signup', async (c) => {
   return c.json({ error: 'Error while signing up' })
 }
 })
-app.post('/api/v1/user/signin',(c)=>{
-    return c.text('signin')
+app.post('/api/v1/user/signin',async (c)=>{
+	const prisma = new PrismaClient({
+		datasourceUrl: c.env?.DATABASE_URL	,
+	}).$extends(withAccelerate());
+
+	const body = await c.req.json();
+	const user = await prisma.user.findUnique({
+		where: {
+			email: body.email,
+			password:body.password
+		}
+	});
+
+	if (!user) {
+		c.status(403);
+		return c.json({ error: "user not found" });
+	}
+
+	const token = await sign({ id: user.id }, c.env.JWT_SECRET);
+	return c.json({ token });
 })
+
 app.post('/api/v1/blog',(c)=>{
   return c.text('post blog')
 })
