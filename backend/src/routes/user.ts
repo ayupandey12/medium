@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { decode, jwt, sign, verify } from 'hono/jwt'
 import { withAccelerate } from '@prisma/extension-accelerate'
+import { Signinschema,Signupschema } from 'ayushdevinfermedium1-common'
 export const Userrouter = new Hono<{
     Bindings: {
         DATABASE_URL: string,
@@ -14,6 +15,12 @@ Userrouter.post('/signup', async (c) => {
 	}).$extends(withAccelerate());
 
 	const body = await c.req.json();
+    const decode =Signupschema.safeParse(body)
+    if(!decode.success)
+    {
+        c.status(403);
+      return c.json({message:"invalid schema"});
+    }
 	try {
 		const user = await prisma.user.create({
 			data: {
@@ -32,9 +39,14 @@ Userrouter.post('/signin', async (c) => {
 	const prisma = new PrismaClient({
 		datasourceUrl: c.env?.DATABASE_URL	,
 	}).$extends(withAccelerate());
-
+    	const body = await c.req.json();
+        const decode =Signinschema.safeParse(body)
+    if(!decode.success)
+    {
+        c.status(403);
+      return c.json({message:"invalid schema"});
+    }
 	try {
-		const body = await c.req.json();
 	const user = await prisma.user.findUnique({
 		where: {
 			email: body.email,

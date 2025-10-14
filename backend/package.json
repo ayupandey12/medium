@@ -9,6 +9,7 @@
   "dependencies": {
     "@prisma/client": "^6.17.0",
     "@prisma/extension-accelerate": "^2.0.2",
+    "ayushdevinfermedium1-common": "^1.0.0",
     "env": "^0.0.2",
     "hono": "^4.9.10",
     "prisma": "^6.17.0"
