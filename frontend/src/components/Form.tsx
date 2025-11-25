@@ -2,7 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import type {Signuptype} from "ayushdevinfermedium1-common"
 import axios from "axios"
-import { baseurl } from "../assets/config";
+import { baseurl } from "../../config";
 
 export const Form=({type}:{type:"signin"|"signup"})=>{
     const navigate =useNavigate();

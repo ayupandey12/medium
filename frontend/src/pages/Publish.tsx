@@ -3,7 +3,7 @@ import type {Blogposttype} from "ayushdevinfermedium1-common"
 import { useNavigate } from "react-router-dom"
 import { Appbar } from "../components/Appbar"
 import axios from "axios"
-import { baseurl } from "../assets/config"
+import { baseurl } from "../../config"
 
 export const Publish=()=>{
     const [publish,setpublish]=useState<Blogposttype>({

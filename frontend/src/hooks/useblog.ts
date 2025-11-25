@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { baseurl } from "../assets/config";
+import { baseurl } from "../../config";
 export interface Blog{
     title:string
     content:string
