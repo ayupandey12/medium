@@ -18,7 +18,17 @@ Userrouter.post('/signup', async (c) => {
     if(!decode.success)
     {
         c.status(403);
-      return c.json({message:"invalid schema"});
+      return c.json({message:decode.error.message.split('\n')[9].split('"')[3]});
+    }
+	const u=await prisma.user.findFirst({
+		where:{
+			email:body.email
+		}
+	})
+	if(u) 
+	  {
+        c.status(403);
+      return c.json({message:"Email is already used!"});
     }
 	try {
 		const user = await prisma.user.create({
@@ -30,9 +40,8 @@ Userrouter.post('/signup', async (c) => {
 		const token = await sign({ id: user.id }, c.env.JWT_SECRET);
 		return c.json({ token });
 	} catch (e) {
-		console.log(e);
   c.status(403)
-  return c.json({ error: 'Error while signing up' })
+  return c.json({ message: 'Something wrong , try again!' })
 }
 })
 Userrouter.post('/signin', async (c) => {
@@ -44,7 +53,7 @@ Userrouter.post('/signin', async (c) => {
     if(!decode.success)
     {
         c.status(403);
-      return c.json({message:"invalid schema"});
+      return c.json({message:"invalid credential!"});
     }
 	try {
 	const user = await prisma.user.findUnique({
@@ -56,13 +65,13 @@ Userrouter.post('/signin', async (c) => {
 
 	if (!user) {
 		c.status(403);
-		return c.json({ error: "user not found" });
+		return c.json({ message: "user not found" });
 	}
 
 	const token = await sign({ id: user.id }, c.env.JWT_SECRET);
 	return c.json({ token });
 	} catch (error) {
 		c.status(411);
-		c.json({error:"invalid"});
+		c.json({message:"invalid"});
 	}
 })
