@@ -20,13 +20,13 @@ export const Form=({type}:{type:"signin"|"signup"})=>{
                 seterror("name is required!");
                 return;
             }
-            if(postbody.name?.length<4)
+            if(postbody.name?.length<=4)
             {
-                seterror("name should be greater than 4");
+                seterror("name length should be greater than 4");
                 return;
             }
            for (const e of postbody.name) {
-              if(e>='a'&&e<='z'||e>='A'&&e<='Z') continue;
+              if(e>='a'&&e<='z'||e>='A'&&e<='Z'||e>='0'&&e<='9') continue;
               else {
                 seterror("name should not contain special characters")
                 return;

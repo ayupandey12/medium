@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { baseurl } from "../../config";
+import { useNavigate } from "react-router-dom";
 export interface Blog{
     title:string
     content:string
@@ -10,6 +11,7 @@ export interface Blog{
     }
 }
 export const useblog=({id}:{id:string})=>{
+  const navigate=useNavigate();
     const [loading,setloading]=useState(true);
     const [blog,setblog]=useState<Blog>();
     useEffect(() => {
@@ -22,7 +24,8 @@ export const useblog=({id}:{id:string})=>{
         setblog(response.data);
         setloading(false);
       }).catch(()=>{
-        alert(`blog is not there!`) //work on it 
+        alert(`blog is currently unavailable`) //work on it 
+        navigate('/blogs');
       })
     }, [id]);
     
@@ -40,8 +43,8 @@ export const useblogs=()=>{
         console.log(response.data);
         setblogs(response.data);
         setloading(false);
-      }).catch(()=>{
-        alert(`blogs are not there!`) //work on it 
+      }).catch((res)=>{
+        //  alert(`blogs are currently unavailable ${res}`) //work on it 
       })
     }, []);
     

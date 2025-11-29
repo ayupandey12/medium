@@ -17,6 +17,29 @@ app.route("/api/v1/blog",Blogrouter);
 app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
+app.get('/loggedin',async (c) => {
+	var loggedin=false;
+ const header =c.req.header("Authorization") || "";
+  const token = header.split(" ")[1];
+
+  if (!token) {
+    return c.json({loggedin});
+  }
+
+  try {
+    const user = await verify(token, c.env.JWT_SECRET);
+    if (user) {
+		loggedin=true;
+      return c.json({loggedin});
+    }
+  } catch (e) {
+    console.log("JWT verification error:", e);
+  }
+
+  return c.json({loggedin});
+
+})
+
 
 
 
