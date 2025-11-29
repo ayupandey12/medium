@@ -6,11 +6,13 @@ import { Blog } from './pages/Blog'
 import { Blogs } from './pages/Blogs'
 import { Publish } from './pages/Publish'
 import { Home } from './pages/Home'
+import { useLogged } from './hooks/uselogged'
+import { Auth } from './context/context'
 function App() {
-
+const {loggedin}=  useLogged();
   return (
-    <>
-    <BrowserRouter>
+    <Auth.Provider value={loggedin}>
+     <BrowserRouter>
     <Routes>
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/signin' element={<Signin/>}/>
@@ -20,7 +22,8 @@ function App() {
       <Route path='/' element={<Home/>}/>
     </Routes>
     </BrowserRouter>
-    </>
+    </Auth.Provider>
+     
   )
 }
 

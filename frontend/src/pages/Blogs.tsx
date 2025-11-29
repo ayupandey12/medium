@@ -2,8 +2,17 @@ import { Blogcard } from "../components/Blogcards"
 import {Appbar} from "../components/Appbar"
 import { useblogs } from "../hooks/useblog"
 import { Skeleton } from "../components/Skeleton";
+import { useContext, useEffect } from "react";
+import { Auth } from "../context/context";
+import { useNavigate } from "react-router-dom";
 
 export const Blogs=()=>{
+    const navigate=useNavigate();
+    const login=useContext(Auth);
+    useEffect(() => {
+       if(login===false) navigate("/signin")
+        console.log(login);
+    }, [login])
     const {loading,blogs}=useblogs();
      if (loading) {
         return <div>

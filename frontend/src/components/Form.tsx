@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import type {Signuptype} from "ayushdevinfermedium1-common"
 import axios from "axios"
 import { baseurl } from "../../config";
+import { useLogged } from "../hooks/uselogged";
 
 export const Form=({type}:{type:"signin"|"signup"})=>{
     const navigate =useNavigate();
@@ -37,7 +38,7 @@ export const Form=({type}:{type:"signin"|"signup"})=>{
            );
           const jwt = `Bearer ${response.data.token}`;
            localStorage.setItem("token",jwt);
-           navigate('/blogs');
+            navigate('/blogs');
            } catch (e:any) {
             seterror(e.response.data.message);
            }
