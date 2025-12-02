@@ -20,7 +20,6 @@ export const useblog=({id}:{id:string})=>{
             Authorization:localStorage.getItem("token")
         }
       }).then((response)=>{
-        console.log(response.data);
         setblog(response.data);
         setloading(false);
       }).catch(()=>{
@@ -40,11 +39,10 @@ export const useblogs=()=>{
             Authorization:localStorage.getItem("token")
         }
       }).then((response)=>{
-        console.log(response.data);
         setblogs(response.data);
         setloading(false);
       }).catch((res)=>{
-        //  alert(`blogs are currently unavailable ${res}`) //work on it 
+        setloading(false);
       })
     }, []);
     

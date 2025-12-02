@@ -1,16 +1,34 @@
-import { useState, type ChangeEvent } from "react"
+import { useContext, useEffect, useState, type ChangeEvent } from "react"
 import type {Blogposttype} from "ayushdevinfermedium1-common"
 import { useNavigate } from "react-router-dom"
 import { Appbar } from "../components/Appbar"
 import axios from "axios"
 import { baseurl } from "../../config"
+import { Auth } from "../context/context"
+import { Skeleton } from "../components/Skeleton"
 
 export const Publish=()=>{
+    const {loggedin}=useContext(Auth)
+    useEffect(() => {
+      if(loggedin===null) return;
+      if(loggedin===false) navigate("/signin");
+    }, [loggedin])
     const [publish,setpublish]=useState<Blogposttype>({
         title:"",
         content:""
     })
     const navigate=useNavigate();
+     if(loggedin===null) return  <div>
+                 <div  className="flex justify-center">
+                     <div>
+                         <Skeleton />
+                         <Skeleton />
+                         <Skeleton />
+                         <Skeleton />
+                         <Skeleton />
+                     </div>
+                 </div>
+             </div>
      return <div>
         <Appbar />
         <div className="flex justify-center w-full pt-8"> 
@@ -23,12 +41,16 @@ export const Publish=()=>{
                     setpublish({...publish,content:e.target.value})
                 }} />
                 <button onClick={async () => {
-                    const response = await axios.post(`${baseurl}/api/v1/blog`,publish, {
+                   try {
+                     const response = await axios.post(`${baseurl}/api/v1/blog`,publish, {
                         headers: {
                             Authorization: localStorage.getItem("token")
                         }
                     });
                     navigate(`/blog/${response.data.id}`)
+                   } catch (error) {
+                    navigate("/blogs");
+                   }
                 }} type="submit" className="mt-4 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
                     Publish post
                 </button>

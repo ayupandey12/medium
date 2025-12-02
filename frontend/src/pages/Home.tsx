@@ -1,9 +1,13 @@
 // import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import { Auth } from "../context/context";
 
 export  const   Home=  ()=>{
+    const {loggedin}=useContext(Auth)
     const navigate=  useNavigate();
+     if (loggedin === null) return null;
     return (
 <div className="w-full min-h-screen bg-[#faf7f2] text-black overflow-hidden">
 {/* Header */}
@@ -12,7 +16,7 @@ export  const   Home=  ()=>{
 <nav className="flex gap-8 text-base">
 <Link to={"/blogs"} className="hover:opacity-60">Our story</Link>
 <Link to={"/publish"}  className="hover:opacity-60">Write</Link>
-<Link to={"/signin"}  className="hover:opacity-60">Sign in</Link>
+ {!loggedin && <Link to={"/signin"} className="hover:opacity-60">Sign in</Link>}
 </nav>
 <button onClick={()=>{navigate('/signup')}} className="bg-black text-white px-5 py-2 rounded-full">Get started</button>
 </header>
