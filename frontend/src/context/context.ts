@@ -1,3 +1,9 @@
 import { createContext } from "react";
-
-export const Auth=createContext<boolean|null>(null);
+interface authcontexttype{
+    loggedin:boolean|null,
+    setloggedin:(value:boolean)=>void;
+}
+export const Auth=createContext<authcontexttype>({
+    loggedin:null,
+    setloggedin:()=>{}
+});

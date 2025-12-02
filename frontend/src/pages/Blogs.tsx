@@ -8,13 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 export const Blogs=()=>{
     const navigate=useNavigate();
-    const login=useContext(Auth);
+    const {loggedin}=useContext(Auth);
     useEffect(() => {
-       if(login===false) navigate("/signin")
-        console.log(login);
-    }, [login])
+       if(loggedin===null) return;
+       if(loggedin===false) navigate("/signin")
+    }, [loggedin])
     const {loading,blogs}=useblogs();
-     if (loading) {
+     if (loading||loggedin===null) {
         return <div>
             <Appbar /> 
             <div  className="flex justify-center">

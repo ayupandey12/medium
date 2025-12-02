@@ -20,5 +20,5 @@ export function useLogged() {
     fetchStatus();
   }, []);
 
-  return { loggedin };
+  return { loggedin ,setLoggedin};
 }

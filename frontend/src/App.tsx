@@ -9,9 +9,9 @@ import { Home } from './pages/Home'
 import { useLogged } from './hooks/uselogged'
 import { Auth } from './context/context'
 function App() {
-const {loggedin}=  useLogged();
+const {loggedin,setLoggedin}=  useLogged();
   return (
-    <Auth.Provider value={loggedin}>
+    <Auth.Provider value={{loggedin:loggedin,setloggedin:setLoggedin}}>
      <BrowserRouter>
     <Routes>
       <Route path='/signup' element={<Signup/>}/>

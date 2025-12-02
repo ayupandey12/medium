@@ -1,11 +1,12 @@
-import { useState, type ChangeEvent } from "react";
+import { useContext, useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import type {Signuptype} from "ayushdevinfermedium1-common"
 import axios from "axios"
 import { baseurl } from "../../config";
-import { useLogged } from "../hooks/uselogged";
+import { Auth } from "../context/context";
 
 export const Form=({type}:{type:"signin"|"signup"})=>{
+  const {setloggedin}=useContext(Auth)
     const navigate =useNavigate();
     const [error,seterror]=useState<string>("")
     const [postbody , setpostbody]=useState<Signuptype>({
@@ -38,6 +39,7 @@ export const Form=({type}:{type:"signin"|"signup"})=>{
            );
           const jwt = `Bearer ${response.data.token}`;
            localStorage.setItem("token",jwt);
+           setloggedin(true);
             navigate('/blogs');
            } catch (e:any) {
             seterror(e.response.data.message);
