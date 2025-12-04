@@ -2,9 +2,9 @@ import { useblog } from "../hooks/useblog"
 import { Appbar } from "../components/Appbar"
 import { useNavigate, useParams } from "react-router-dom"
 import { Mainblog } from "../components/mainblog";
-import { Spinner } from "../components/Spinner";
 import { useContext ,useEffect} from "react";
 import { Auth } from "../context/context";
+import { Skeleton } from "../components/Skeleton";
 
 export const Blog=()=>{
     const navigate=useNavigate();
@@ -21,12 +21,13 @@ export const Blog=()=>{
     if (loading || !blog||loggedin===null) {
         return <div>
             <Appbar />
-        
-            <div className="h-screen flex flex-col justify-center"> 
-                <div className="flex justify-center">
-                    <Spinner />
-                </div>
-            </div>
+                  <div className="flex flex-col items-center">
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                    <Skeleton />
+                  </div>
         </div>
     }
       return <div>
