@@ -18,7 +18,7 @@ export  const   Home=  ()=>{
 <Link to={"/publish"}  className="hover:opacity-60">Write</Link>
  {!loggedin && <Link to={"/signin"} className="hover:opacity-60">Sign in</Link>}
 </nav>
-<button onClick={()=>{navigate('/signup')}} className="bg-black text-white px-5 py-2 rounded-full">Get started</button>
+<button onClick={()=>{loggedin?navigate("/blogs"):navigate('/signup')}} className="bg-black text-white px-5 py-2 rounded-full">Get started</button>
 </header>
 
 

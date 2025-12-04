@@ -23,7 +23,7 @@ export const useblog=({id}:{id:string})=>{
         setblog(response.data);
         setloading(false);
       }).catch(()=>{
-        alert(`blog is currently unavailable`) //work on it 
+        alert(`blog is currently unavailable`) 
         navigate('/blogs');
       })
     }, [id]);
