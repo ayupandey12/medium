@@ -1,11 +1,20 @@
-import {atom, selector} from "recoil"
-export const blogdata=atom<Record<string,{}>>({key:"blogdata" ,
+import {atom, selectorFamily} from "recoil"
+import type { Blog } from "../hooks/useblog";
+import axios from "axios";
+import { baseurl } from "../../config";
+export const blogdata=atom<Record<string,Blog>>({
+    key:"blogdata" ,
     default:{}
 })
-export const blogdataselector=selector({
-    key:"blogdataselector",
-    get:async ({get})=>{
-        const data=get(blogdata);
-        
-    }
-})
+export const blogByIdSelector = selectorFamily<Blog, string>({
+  key: "blogByIdSelector",
+  get: (id) => async () => {
+    const res = await axios.get(`${baseurl}/api/v1/blog/${id}`, {
+      headers: {
+        Authorization: localStorage.getItem("token") || "",
+      },
+    });
+
+    return res.data;
+  },
+});
