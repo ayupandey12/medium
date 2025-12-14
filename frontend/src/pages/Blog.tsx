@@ -1,29 +1,42 @@
-import { useblog } from "../hooks/useblog"
+import { useblog, type Blog } from "../hooks/useblog"
 import { Appbar } from "../components/Appbar"
 import { useNavigate, useParams } from "react-router-dom"
 import { Mainblog } from "../components/mainblog";
 import { useContext ,useEffect} from "react";
 import { Auth } from "../context/context";
 import { Skeleton } from "../components/Skeleton";
-import {  useRecoilValueLoadable } from "recoil";
-import { blogByIdSelector } from "../context/atom";
+import {   useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { blogByIdSelector, blogdata } from "../context/atom";
 
-export const Blog=()=>{
-    const navigate=useNavigate();
-    const {loggedin}=useContext(Auth);
+export const Blogbyid=()=>{
+    const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { loggedin } = useContext(Auth);
+    const blogLoadable = useRecoilValueLoadable(
+    blogByIdSelector(id??"")
+  );
+
+  const setBlogData = useSetRecoilState(blogdata);
+
     useEffect(() => {
       if(loggedin===null) return ;
       if(loggedin===false) navigate("/signin");
     }, [loggedin])
     
-    const id=useParams<{id:string}>();
+     useEffect(() => {
+    if (blogLoadable.state === "hasValue") {
+      setBlogData(prev => ({
+        ...prev,
+        [id!]: blogLoadable.contents,
+      }));
+    }
+  }, [ id]);
     
     // const {loading,blog}=useblog({id:id.id||""})
-   const blogLoadable = useRecoilValueLoadable(
-    blogByIdSelector(id.id!||"")
-  );
+    
+   
 
-    if ( blogLoadable.state==="loading"||loggedin===null) {
+    if (loggedin===null|| blogLoadable.state==="loading") {
         return <div>
             <Appbar />
                   <div className="flex flex-col items-center">
@@ -40,6 +53,7 @@ export const Blog=()=>{
   }
 
   const blog = blogLoadable.contents;
+  
 
       return <div>
           <Appbar name="Ayush"/>

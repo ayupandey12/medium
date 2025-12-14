@@ -8,7 +8,9 @@ export const blogdata=atom<Record<string,Blog>>({
 })
 export const blogByIdSelector = selectorFamily<Blog, string>({
   key: "blogByIdSelector",
-  get: (id) => async () => {
+  get: (id) => async ({get}) => {
+    const data=get(blogdata);
+    if(data[id]) return data[id];
     const res = await axios.get(`${baseurl}/api/v1/blog/${id}`, {
       headers: {
         Authorization: localStorage.getItem("token") || "",
