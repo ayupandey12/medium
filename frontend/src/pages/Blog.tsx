@@ -49,7 +49,7 @@ export const Blogbyid=()=>{
         </div>
     }
      if (blogLoadable.state === "hasError") {
-    return <div>Error loading blog</div>;
+    navigate('/blogs')
   }
 
   const blog = blogLoadable.contents;
