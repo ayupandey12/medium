@@ -8,6 +8,7 @@ import { Publish } from './pages/Publish'
 import { Home } from './pages/Home'
 import { useLogged } from './hooks/uselogged'
 import { Auth } from './context/context'
+import { Pagenotfound } from './pages/Pagenotfound'
 function App() {
 const {loggedin,setLoggedin}=  useLogged();
   return (
@@ -20,6 +21,7 @@ const {loggedin,setLoggedin}=  useLogged();
       <Route path='/blogs' element={<Blogs/>}/>
       <Route path='/publish' element={<Publish/>}/>
       <Route path='/' element={<Home/>}/>
+      <Route path='*' element={<Pagenotfound/>}/>
     </Routes>
     </BrowserRouter>
     </Auth.Provider>

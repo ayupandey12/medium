@@ -6,9 +6,9 @@ export const blogdata=atom<Record<string,Blog>>({
     key:"blogdata" ,
     default:{}
 })
-export const blogByIdSelector = selectorFamily<Blog, string>({
+export const blogByIdSelector = selectorFamily({
   key: "blogByIdSelector",
-  get: (id) => async ({get}) => {
+  get: (id:string) => async ({get}) => {
     const data=get(blogdata);
     if(data[id]) return data[id];
     const res = await axios.get(`${baseurl}/api/v1/blog/${id}`, {

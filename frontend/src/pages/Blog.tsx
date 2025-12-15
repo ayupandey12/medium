@@ -9,7 +9,7 @@ import {   useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { blogByIdSelector, blogdata } from "../context/atom";
 
 export const Blogbyid=()=>{
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams<{ id: string}>();
   const navigate = useNavigate();
   const { loggedin } = useContext(Auth);
     const blogLoadable = useRecoilValueLoadable(
