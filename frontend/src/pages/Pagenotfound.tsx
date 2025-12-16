@@ -8,12 +8,21 @@ export const Pagenotfound=()=>{
         Oops! The page you’re looking for doesn’t exist.
       </p>
 
-      <Link
+     <div className="flex gap-5">
+       <Link
         to="/"
         className="px-6 py-3 rounded-full bg-black text-white text-lg hover:opacity-90"
       >
         Go back home
       </Link>
+      
+      <Link
+        to="/blogs"
+        className="px-6 py-3 rounded-full bg-black text-white text-lg hover:opacity-90"
+      >
+        Go back blogs
+      </Link>
+     </div>
     </div>
   );
 }
