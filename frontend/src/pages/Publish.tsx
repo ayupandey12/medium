@@ -40,6 +40,7 @@ export const Publish=()=>{
                 <TextEditor onChange={(e) => {
                     setpublish({...publish,content:e.target.value})
                 }} />
+                <input type="file" name="uploadimage" id="uploadimage" />
                 <button onClick={async () => {
                    try {
                      const response = await axios.post(`${baseurl}/api/v1/blog`,publish, {
