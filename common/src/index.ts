@@ -10,11 +10,13 @@ export const Signupschema=z.object({
 })
 export const Blogpostschema=z.object({
      title: z.string(),  
-     content:  z.string()
+     content:  z.string(),
+     image: z.string()
 })
 export const Blogupdateschema=z.object({
      title: z.string().optional(),  
-     content:  z.string().optional()
+     content:  z.string().optional(),
+     image: z.string().optional()
 })
 export type Signintype=z.infer<typeof Signinschema>;
 export type Signuptype=z.infer<typeof Signupschema>;
