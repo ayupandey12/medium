@@ -8,7 +8,7 @@ interface blogcardtype{
     publishedDate:string
     id:string
 }
-export const Blogcard=({title,content,authorname,publishedDate,id}:blogcardtype)=>{
+export const Blogcard=({title,content,authorname,publishedDate,id,image}:blogcardtype)=>{
      // onclicking the card you will go to that cards page
       return <Link to={`/blog/${id}`}> 
         <div className="p-4 border-b border-slate-200 pb-6 w-screen max-w-3xl cursor-pointer ">

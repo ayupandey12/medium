@@ -33,7 +33,7 @@ export const Blogs=()=>{
        <div className=" h-full flex flex-col items-center  pt-14 gap-10">
          <div>
             {blogs.map(blog=>{
-                return <Blogcard key={blog.id} id={blog.id} title={blog.title} content={blog.content} authorname={blog.author.name||"Anon"} publishedDate="2nd feb 2025"/>
+                return <Blogcard image={blog.image} key={blog.id} id={blog.id} title={blog.title} content={blog.content} authorname={blog.author.name||"Anon"} publishedDate="2nd feb 2025"/>
             })}
          </div>
        </div>
