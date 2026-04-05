@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, type ChangeEvent } from "react"
-import type {Blogposttype} from "ayushdevinfermedium1-common"
+import type {Blogposttype} from "@ayushdevinfer1/medium-common"
 import { useNavigate } from "react-router-dom"
 import { Appbar } from "../components/Appbar"
 import axios from "axios"

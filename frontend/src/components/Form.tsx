@@ -1,6 +1,6 @@
 import { useContext, useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom"
-import type {Signuptype} from "ayushdevinfermedium1-common"
+import type {Signuptype} from "@ayushdevinfer1/medium-common"
 import axios from "axios"
 import { baseurl } from "../../config";
 import { Auth } from "../context/context";
