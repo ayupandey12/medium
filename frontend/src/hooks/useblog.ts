@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export interface Blog{
     title:string
     content:string
+    image:string
     id:string
     author:{
         name:string

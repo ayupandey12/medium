@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 interface blogcardtype{
     title:string
     content:string
+    image:string
     authorname:string
     publishedDate:string
     id:string
