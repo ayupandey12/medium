@@ -55,10 +55,7 @@ export const Blog = () => {
         )
     }
 
-    const savedUsername =
-        (localStorage.getItem("username") ?? localStorage.getItem("name") ?? "").toLowerCase()
-    const isAdmin = localStorage.getItem("role") === "admin"
-    const canEdit = isAdmin || savedUsername === blog.author.name.toLowerCase()
+    const hasToken = !!localStorage.getItem("token")
 
     const topicLabel = blog.title.split(" ").slice(0, 2).join(" ")
 
@@ -74,8 +71,13 @@ export const Blog = () => {
                 headers: token ? { Authorization: token } : undefined
             })
             navigate("/blogs")
-        } catch (error) {
-            alert("Unable to delete story right now.")
+        } catch (error: unknown) {
+            console.error("Error deleting blog:", error)
+            if (axios.isAxiosError(error) && error.response?.status === 403) {
+                alert("You are not authorized to delete this story.")
+            } else {
+                alert("Unable to delete story right now.")
+            }
         } finally {
             setIsDeleting(false)
         }
@@ -84,11 +86,11 @@ export const Blog = () => {
     return (
         <div className="relative min-h-screen overflow-hidden bg-[#efede7] text-[#1c1814]">
             <div className="pointer-events-none absolute inset-0">
-                <img src={blog.image} alt={blog.title} className="h-full w-full object-cover opacity-20" />
-                <div className="absolute inset-0 bg-[#efede7]/84" />
+                <img src={blog.image} alt={blog.title} className="h-full w-full object-cover opacity-25" />
+                <div className="absolute inset-0 bg-[#efede7]/82" />
             </div>
             <Appbar />
-            <main className="relative z-10 mx-auto max-w-4xl px-4 pb-16 pt-8">
+            <main className="relative z-10 mx-auto min-h-[88vh] max-w-4xl px-4 pb-16 pt-8">
                 <section className="text-center">
                     <h1 className="font-['Cinzel'] text-4xl font-semibold uppercase tracking-tight text-[#17130f] sm:text-6xl">
                         {blog.title}
@@ -125,7 +127,7 @@ export const Blog = () => {
                         >
                             Back to stories
                         </Link>
-                        {canEdit && (
+                        {hasToken && (
                             <>
                                 <Link
                                     to={`/publish?edit=${blog.id}`}
