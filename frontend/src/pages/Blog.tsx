@@ -84,13 +84,13 @@ export const Blog = () => {
     }
 
     return (
-        <div className="relative min-h-screen overflow-hidden bg-[#efede7] text-[#1c1814]">
-            <div className="pointer-events-none absolute inset-0">
-                <img src={blog.image} alt={blog.title} className="h-full w-full object-cover opacity-25" />
-                <div className="absolute inset-0 bg-[#efede7]/82" />
+        <div className="relative min-h-screen bg-[#efede7] text-[#1c1814]">
+            <div className="pointer-events-none fixed inset-0">
+                <img src={blog.image} alt={blog.title} className="h-screen w-screen object-cover" />
+                <div className="absolute inset-0 bg-[#efede7]/78" />
             </div>
             <Appbar />
-            <main className="relative z-10 mx-auto min-h-[88vh] max-w-4xl px-4 pb-16 pt-8">
+            <main className="relative z-10 mx-auto min-h-screen max-w-4xl px-4 pb-16 pt-8">
                 <section className="text-center">
                     <h1 className="font-['Cinzel'] text-4xl font-semibold uppercase tracking-tight text-[#17130f] sm:text-6xl">
                         {blog.title}
