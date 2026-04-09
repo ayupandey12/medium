@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, type ChangeEvent } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 import type { Blogposttype } from "@ayushdevinfer1/medium-common"
-import { useNavigate } from "react-router-dom"
 import { Appbar } from "../components/Appbar"
 import axios from "axios"
 import { baseurl, cloudName, uploadPreset } from "../../config"
@@ -10,15 +10,19 @@ import { Skeleton } from "../components/Skeleton"
 export const Publish = () => {
     const { loggedin } = useContext(Auth)
     const navigate = useNavigate()
+    const location = useLocation()
 
     const [publish, setpublish] = useState<Blogposttype>({
         title: "",
         content: "",
         image: ""
     })
-
     const [isSaving, setIsSaving] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
+    const [isEditMode, setIsEditMode] = useState(false)
+
+    const query = new URLSearchParams(location.search)
+    const editId = query.get("edit")
 
     const isFormValid =
         publish.title.trim().length >= 8 &&
@@ -33,6 +37,24 @@ export const Publish = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+
+    useEffect(() => {
+        if (!editId) return
+        setIsEditMode(true)
+        const token = localStorage.getItem("token")
+        axios
+            .get(`${baseurl}/api/v1/blog/${editId}`, {
+                headers: token ? { Authorization: token } : undefined
+            })
+            .then((response) => {
+                setpublish({
+                    title: response.data.title,
+                    content: response.data.content,
+                    image: response.data.image
+                })
+            })
+            .catch(() => setErrorMessage("Unable to load story for editing."))
+    }, [editId])
 
     const uploadImage = () => {
         // @ts-ignore
@@ -83,10 +105,13 @@ export const Publish = () => {
         setErrorMessage("")
         setIsSaving(true)
 
+        const token = localStorage.getItem("token")
+        const headers = token ? { Authorization: token } : undefined
+
         try {
-            const response = await axios.post(`${baseurl}/api/v1/blog`, publish, {
-                headers: { Authorization: localStorage.getItem("token") ?? "" }
-            })
+            const response = editId
+                ? await axios.patch(`${baseurl}/api/v1/blog/${editId}`, publish, { headers })
+                : await axios.post(`${baseurl}/api/v1/blog`, publish, { headers })
             navigate(`/blog/${response.data.id}`)
         } catch (error) {
             console.error("Error publishing:", error)
@@ -113,10 +138,16 @@ export const Publish = () => {
             <main className="mx-auto max-w-5xl px-4 py-10">
                 <section className="rounded-[32px] border border-slate-200 bg-white/95 p-8 shadow-xl shadow-slate-200/80 backdrop-blur-sm">
                     <div className="mb-8 space-y-3">
-                        <p className="text-sm uppercase tracking-[0.24em] text-sky-600">Create post</p>
-                        <h1 className="text-4xl font-semibold tracking-tight text-slate-900">Publish your next story</h1>
+                        <p className="text-sm uppercase tracking-[0.24em] text-sky-600">
+                            {isEditMode ? "Update post" : "Create post"}
+                        </p>
+                        <h1 className="text-4xl font-semibold tracking-tight text-slate-900">
+                            {isEditMode ? "Edit your story" : "Publish your next story"}
+                        </h1>
                         <p className="max-w-2xl text-sm leading-7 text-slate-600">
-                            Share your ideas with a clean publishing experience. Add a title, strong content, and a cover image to make your post stand out.
+                            {isEditMode
+                                ? "Update the post content, cover image, or title. Changes will appear immediately after save."
+                                : "Share your ideas with a clean publishing experience. Add a title, strong content, and a cover image to make your post stand out."}
                         </p>
                     </div>
 
@@ -138,9 +169,7 @@ export const Publish = () => {
                                 value={publish.content}
                                 onChange={(e) => setpublish({ ...publish, content: e.target.value })}
                             />
-                            <p className="text-sm text-slate-500">
-                                {publish.content.trim().length} / 100+ characters
-                            </p>
+                            <p className="text-sm text-slate-500">{publish.content.trim().length} / 100+ characters</p>
                         </div>
 
                         <div className="space-y-4">
@@ -162,11 +191,7 @@ export const Publish = () => {
 
                             {publish.image && (
                                 <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-900/5">
-                                    <img
-                                        src={publish.image}
-                                        alt="Uploaded preview"
-                                        className="h-[260px] w-full object-cover"
-                                    />
+                                    <img src={publish.image} alt="Uploaded preview" className="h-[260px] w-full object-cover" />
                                 </div>
                             )}
                         </div>
@@ -180,7 +205,9 @@ export const Publish = () => {
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                             <div className="text-sm text-slate-500">
                                 {isFormValid
-                                    ? "Ready to publish."
+                                    ? isEditMode
+                                        ? "Ready to save your update."
+                                        : "Ready to publish."
                                     : "Add a title, enough content, and an image for the best result."}
                             </div>
                             <button
@@ -188,7 +215,7 @@ export const Publish = () => {
                                 disabled={!isFormValid || isSaving}
                                 className="inline-flex items-center justify-center rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
                             >
-                                {isSaving ? "Publishing..." : "Publish post"}
+                                {isSaving ? "Saving..." : isEditMode ? "Save story" : "Publish post"}
                             </button>
                         </div>
                     </div>
