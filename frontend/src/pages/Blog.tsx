@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { Appbar } from "../components/Appbar";
 import { Spinner } from "../components/Spinner";
 import { useblog } from "../hooks/useblog";
+import axios from "axios";
+import { baseurl } from "../../config";
 
 export const Blog = () => {
     const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
     const { loading, blog } = useblog({ id: id ?? "" })
+    const [isDeleting, setIsDeleting] = useState(false)
 
     useEffect(() => {
         if (!id) {
@@ -26,7 +29,7 @@ export const Blog = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-slate-950 text-white">
+            <div className="min-h-screen bg-[#efede7] text-[#1d1914]">
                 <Appbar />
                 <div className="flex min-h-[70vh] items-center justify-center px-4">
                     <Spinner />
@@ -37,13 +40,13 @@ export const Blog = () => {
 
     if (!blog) {
         return (
-            <div className="min-h-screen bg-slate-50 text-slate-900">
+            <div className="min-h-screen bg-[#efede7] text-[#1d1914]">
                 <Appbar />
                 <main className="mx-auto max-w-5xl px-4 py-16 text-center">
-                    <p className="text-lg font-semibold text-slate-900">Story not found.</p>
+                    <p className="font-['Cinzel'] text-lg font-semibold uppercase text-[#1d1914]">Story not found.</p>
                     <Link
                         to="/blogs"
-                        className="mt-6 inline-flex rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-700"
+                        className="mt-6 inline-flex rounded-full border border-[#ccbda3] bg-[#f3e6cf] px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#ead8b8]"
                     >
                         Back to stories
                     </Link>
@@ -59,69 +62,87 @@ export const Blog = () => {
 
     const topicLabel = blog.title.split(" ").slice(0, 2).join(" ")
 
+    const handleDelete = async () => {
+        if (!blog?.id || isDeleting) return
+        const shouldDelete = window.confirm("Are you sure you want to delete this story?")
+        if (!shouldDelete) return
+
+        setIsDeleting(true)
+        try {
+            const token = localStorage.getItem("token")
+            await axios.delete(`${baseurl}/api/v1/blog/${blog.id}`, {
+                headers: token ? { Authorization: token } : undefined
+            })
+            navigate("/blogs")
+        } catch (error) {
+            alert("Unable to delete story right now.")
+        } finally {
+            setIsDeleting(false)
+        }
+    }
+
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-100">
+        <div className="relative min-h-screen overflow-hidden bg-[#efede7] text-[#1c1814]">
+            <div className="pointer-events-none absolute inset-0">
+                <img src={blog.image} alt={blog.title} className="h-full w-full object-cover opacity-20" />
+                <div className="absolute inset-0 bg-[#efede7]/84" />
+            </div>
             <Appbar />
-            <main className="relative">
-                <section className="relative min-h-[64vh]">
-                    <div className="absolute inset-0">
-                        <img
-                            src={blog.image}
-                            alt={blog.title}
-                            className="h-full w-full object-cover object-center transition duration-700"
-                        />
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(56,189,248,0.22),_transparent_32%),linear-gradient(180deg,_rgba(15,23,42,0.82),_rgba(15,23,42,0.98))]" />
-                    </div>
-
-                    <div className="relative mx-auto flex min-h-[64vh] max-w-5xl flex-col justify-end px-6 pb-16 pt-24 sm:px-8">
-                        <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs uppercase tracking-[0.28em] text-white/80">
-                            {topicLabel}
-                        </span>
-
-                        <div className="mt-5 flex flex-col gap-4 sm:max-w-3xl">
-                            <h1 className="text-5xl font-semibold leading-tight tracking-tight text-white sm:text-6xl">
-                                {blog.title}
-                            </h1>
-                            <p className="text-base leading-8 text-slate-200/85">{blog.content.slice(0, 180)}...</p>
-                        </div>
-
-                        <div className="mt-8 flex flex-wrap items-center gap-4 text-sm text-slate-200/80">
-                            <span className="rounded-full bg-white/10 px-3 py-1">{blog.author.name}</span>
-                            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-slate-200/70" />
-                            <span>{formatDate(blog.createdAt)}</span>
-                        </div>
-
-                        <div className="mt-8 flex flex-wrap gap-3">
-                            <Link
-                                to="/blogs"
-                                className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm text-white transition hover:border-sky-300 hover:bg-sky-500/15"
-                            >
-                                Back to stories
-                            </Link>
-                            {canEdit && (
-                                <Link
-                                    to={`/publish?edit=${blog.id}`}
-                                    className="inline-flex items-center rounded-full bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-700"
-                                >
-                                    Edit story
-                                </Link>
-                            )}
-                        </div>
+            <main className="relative z-10 mx-auto max-w-4xl px-4 pb-16 pt-8">
+                <section className="text-center">
+                    <h1 className="font-['Cinzel'] text-4xl font-semibold uppercase tracking-tight text-[#17130f] sm:text-6xl">
+                        {blog.title}
+                    </h1>
+                    <p className="mt-3 font-['Cormorant_Garamond'] text-xs uppercase tracking-[0.3em] text-[#50473d]">
+                        {topicLabel} . {formatDate(blog.createdAt)}
+                    </p>
+                    <div className="mx-auto mt-5 max-w-3xl border-b border-t border-[#4a4339] py-5 font-['Cormorant_Garamond'] text-lg italic text-[#3e372f]">
+                        {blog.content.slice(0, 120)}...
                     </div>
                 </section>
 
-                <section className="mx-auto max-w-4xl px-4 py-12 sm:px-8">
-                    <div className="overflow-hidden rounded-[32px] border border-white/10 bg-slate-950/95 p-10 shadow-2xl shadow-slate-950/30 backdrop-blur-sm">
-                        <div className="flex items-center justify-between gap-3">
-                            <span className="text-sm uppercase tracking-[0.28em] text-sky-300">Full story</span>
-                            <span className="rounded-full border border-white/10 bg-white/10 px-3 py-2 text-xs uppercase tracking-[0.24em] text-slate-300">
-                                {topicLabel}
-                            </span>
+                <section className="relative mt-10 overflow-hidden border border-[#d7cab2] bg-[#f3ece0]/85 p-8 shadow-[0_12px_30px_rgba(0,0,0,0.06)] sm:p-10">
+                    <img
+                        src={blog.image}
+                        alt={blog.title}
+                        className="pointer-events-none absolute -bottom-10 -left-16 hidden h-[85%] w-auto opacity-10 sm:block"
+                    />
+                    <article className="relative font-['Cormorant_Garamond'] text-[22px] leading-8 text-[#2d261f]">
+                        <div className="whitespace-pre-line first-letter:float-left first-letter:mr-2 first-letter:font-['Cinzel'] first-letter:text-6xl first-letter:font-semibold">
+                            {blog.content}
                         </div>
+                    </article>
+                </section>
 
-                        <article className="prose prose-slate max-w-none text-slate-100 prose-headings:text-white prose-p:text-slate-200">
-                            <div className="whitespace-pre-line">{blog.content}</div>
-                        </article>
+                <section className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#4a4339] pt-6">
+                    <div className="font-['Cormorant_Garamond'] text-lg italic text-[#413830]">
+                        By <span className="font-semibold not-italic">{blog.author.name}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                        <Link
+                            to="/blogs"
+                            className="inline-flex items-center rounded-full border border-[#4a4339] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#e6ded0]"
+                        >
+                            Back to stories
+                        </Link>
+                        {canEdit && (
+                            <>
+                                <Link
+                                    to={`/publish?edit=${blog.id}`}
+                                    className="inline-flex items-center rounded-full border border-[#ccbda3] bg-[#f3e6cf] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#ead8b8]"
+                                >
+                                    Update story
+                                </Link>
+                                <button
+                                    type="button"
+                                    onClick={handleDelete}
+                                    disabled={isDeleting}
+                                    className="inline-flex items-center rounded-full border border-[#8b3b31] bg-[#a9493d] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#f9eee8] transition hover:bg-[#923f34] disabled:cursor-not-allowed disabled:opacity-60"
+                                >
+                                    {isDeleting ? "Deleting..." : "Delete story"}
+                                </button>
+                            </>
+                        )}
                     </div>
                 </section>
             </main>

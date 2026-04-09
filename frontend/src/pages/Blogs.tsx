@@ -16,32 +16,34 @@ export const Blogs = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-900">
+        <div className="min-h-screen bg-[#efede7] text-[#191512]">
             <Appbar />
-            <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-                <section className="overflow-hidden rounded-[32px] border border-slate-200 bg-white/95 p-10 shadow-xl shadow-slate-200/70">
-                    <div className="mx-auto max-w-4xl space-y-6 text-center">
-                        <span className="text-xs uppercase tracking-[0.32em] text-sky-600">
-                            Verified stories only
-                        </span>
-                        <h1 className="text-5xl font-semibold tracking-tight text-slate-950 sm:text-6xl">
-                            Welcome to <span className="text-slate-900">StoryBook</span>
+            <main className="mx-auto max-w-6xl px-4 pb-14 pt-7 sm:px-6">
+                <section className="border-b border-t border-[#4a4339] py-10 text-center">
+                    <div className="mx-auto max-w-4xl space-y-4">
+                        <div className="text-2xl text-[#353027]">===</div>
+                        <h1 className="font-['Cinzel'] text-5xl font-semibold uppercase leading-tight tracking-tight text-[#1d1814] sm:text-6xl">
+                            Welcome To
+                            <br />
+                            <span className="text-[#c9b89d]">Story</span>Book
                         </h1>
-                        <p className="mx-auto max-w-2xl text-base leading-8 text-slate-600">
-                            Discover beautifully crafted stories with cover art, a clean reading layout, and fast access to every published post.
+                        <p className="font-['Cormorant_Garamond'] text-sm uppercase tracking-[0.42em] text-[#50483d]">
+                            - Volume 2026 -
+                        </p>
+                        <p className="font-['Cormorant_Garamond'] text-base italic text-[#5c5143]">
+                            Verified stories only . Open to all readers
                         </p>
                     </div>
-
-                    <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center">
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
                         <a
                             href="/publish"
-                            className="inline-flex justify-center rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+                            className="inline-flex justify-center rounded-full border border-[#ccbda3] bg-[#f3e6cf] px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#ead8b8]"
                         >
                             Publish your story
                         </a>
                         <a
                             href="/"
-                            className="inline-flex justify-center rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400"
+                            className="inline-flex justify-center rounded-full border border-[#4a4339] px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#342d25] transition hover:bg-[#e6ded0]"
                         >
                             Home
                         </a>
