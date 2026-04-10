@@ -110,7 +110,7 @@ export const Publish = () => {
 
         try {
             const response = editId
-                ? await axios.patch(`${baseurl}/api/v1/blog/${editId}`, publish, { headers })
+                ? await axios.put(`${baseurl}/api/v1/blog/${editId}`, publish, { headers })
                 : await axios.post(`${baseurl}/api/v1/blog`, publish, { headers })
             navigate(`/blog/${response.data.id}`)
         } catch (error) {
