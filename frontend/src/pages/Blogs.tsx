@@ -1,11 +1,33 @@
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Appbar } from "../components/Appbar";
 import { Blogcard } from "../components/Blogcards";
 import { Spinner } from "../components/Spinner";
 import { useBlogs } from "../hooks/useblog";
+import { Auth } from "../context/context";
 
 export const Blogs = () => {
-    const { loading, blogs } = useBlogs()
+    const { loggedin } = useContext(Auth);
+    const navigate = useNavigate();
+    const { loading, blogs } = useBlogs();
 
+    useEffect(() => {
+        if (loggedin === false) {
+            navigate("/signin");
+        }
+    }, [loggedin, navigate]);
+
+    if (loggedin === null) {
+        return (
+            <div className="min-h-screen bg-[#efede7] text-[#191512]">
+                <Appbar />
+                <div className="flex min-h-[40vh] items-center justify-center px-4 py-16">
+                    <Spinner />
+                </div>
+            </div>
+        );
+    }
+    
     const formatDate = (dateString?: string) => {
         if (!dateString) return new Date().toLocaleDateString();
         return new Date(dateString).toLocaleDateString('en-US', {
