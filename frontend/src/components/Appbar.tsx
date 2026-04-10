@@ -32,7 +32,7 @@ export const Appbar = () => {
                     <Link to="/" className="px-2 text-[#f3e9d6] transition hover:text-white">
                         Home
                     </Link>
-                    <Link to="/blogs" className="px-2 text-[#f3e9d6] transition hover:text-white">
+                    <Link to="/dashboard" className="px-2 text-[#f3e9d6] transition hover:text-white">
                         Dashboard
                     </Link>
                     <Link to="/publish" className="rounded-full border border-[#d6c9b0] bg-[#f1e5cf] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#3f372f] transition hover:bg-[#ead9ba]">

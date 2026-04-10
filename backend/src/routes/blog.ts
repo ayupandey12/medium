@@ -148,6 +148,40 @@ Blogrouter.get('/bulk', async (c) => {
   }
 });
 
+// Get authenticated user's own blogs
+Blogrouter.get('/my', async (c) => {
+    const prisma = new PrismaClient({
+  datasourceUrl: c.env.DATABASE_URL,
+}).$extends(withAccelerate());
+  const userId = c.get("userId");
+  if (!userId) {
+    c.status(401);
+    return c.json({ error: "Unauthorized" });
+  }
+
+  try {
+    const blogs = await prisma.post.findMany({
+      where: { authorId: userId },
+      select: {
+        title: true,
+        content: true,
+        image: true,
+        id: true,
+        author: {
+          select: {
+            name: true
+          }
+        }
+      }
+    });
+    return c.json(blogs);
+  } catch (error) {
+    console.error(error);
+    c.status(500);
+    return c.json({ error: "Error fetching your blogs" });
+  }
+});
+
 //  Get a single blog by ID
 Blogrouter.get('/:id', async (c) => {
     const prisma = new PrismaClient({

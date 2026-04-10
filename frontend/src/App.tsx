@@ -5,6 +5,7 @@ import { Signin } from './pages/Signin'
 import { Blog } from './pages/Blog'
 import { Blogs } from './pages/Blogs'
 import { Publish } from './pages/Publish'
+import { Dashboard } from './pages/Dashboard'
 import { Home } from './pages/Home'
 import { useLogged } from './hooks/uselogged'
 import { Auth } from './context/context'
@@ -19,6 +20,7 @@ function App() {
                     <Route path='/signin' element={<Signin/>}/>
                     <Route path='/blog/:id' element={<Blog/>}/>
                     <Route path='/blogs' element={<Blogs/>}/>
+                    <Route path='/dashboard' element={<Dashboard/>}/>
                     <Route path='/publish' element={<Publish/>}/>
                     <Route path='/' element={<Home/>}/>
                     <Route path='*' element={<Pagenotfound/>}/>

@@ -1,19 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
 import { Appbar } from "../components/Appbar";
 import { Spinner } from "../components/Spinner";
 import { useBlog } from "../hooks/useblog";
-import { blogdata } from "../context/atom";
-import axios from "axios";
-import { baseurl } from "../../config";
 
 export const Blog = () => {
     const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
     const { loading, blog } = useBlog({ id: id ?? "" })
-    const [isDeleting, setIsDeleting] = useState(false)
-    const setBlogMap = useSetRecoilState(blogdata)
 
     useEffect(() => {
         if (!id) {
@@ -58,38 +52,7 @@ export const Blog = () => {
         )
     }
 
-    const hasToken = !!localStorage.getItem("token")
-
     const topicLabel = blog.title.split(" ").slice(0, 2).join(" ")
-
-    const handleDelete = async () => {
-        if (!blog?.id || isDeleting) return
-        const shouldDelete = window.confirm("Are you sure you want to delete this story?")
-        if (!shouldDelete) return
-
-        setIsDeleting(true)
-        try {
-            const token = localStorage.getItem("token")
-            await axios.delete(`${baseurl}/api/v1/blog/${blog.id}`, {
-                headers: token ? { Authorization: token } : undefined
-            })
-            setBlogMap((prev) => {
-                const next = { ...prev }
-                delete next[blog.id]
-                return next
-            })
-            navigate("/blogs")
-        } catch (error: unknown) {
-            console.error("Error deleting blog:", error)
-            if (axios.isAxiosError(error) && error.response?.status === 403) {
-                alert("You are not authorized to delete this story.")
-            } else {
-                alert("Unable to delete story right now.")
-            }
-        } finally {
-            setIsDeleting(false)
-        }
-    }
 
     return (
         <div className="relative min-h-screen bg-[#efede7] text-[#1c1814]">
@@ -135,24 +98,6 @@ export const Blog = () => {
                         >
                             Back to stories
                         </Link>
-                        {hasToken && (
-                            <>
-                                <Link
-                                    to={`/publish?edit=${blog.id}`}
-                                    className="inline-flex items-center rounded-full border border-[#ccbda3] bg-[#f3e6cf] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#ead8b8]"
-                                >
-                                    Update story
-                                </Link>
-                                <button
-                                    type="button"
-                                    onClick={handleDelete}
-                                    disabled={isDeleting}
-                                    className="inline-flex items-center rounded-full border border-[#8b3b31] bg-[#a9493d] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#f9eee8] transition hover:bg-[#923f34] disabled:cursor-not-allowed disabled:opacity-60"
-                                >
-                                    {isDeleting ? "Deleting..." : "Delete story"}
-                                </button>
-                            </>
-                        )}
                     </div>
                 </section>
             </main>

@@ -92,3 +92,34 @@ export const useBlogs = () => {
 
     return { loading, blogs }
 }
+
+export const useMyBlogs = () => {
+    const [loading, setloading] = useState(true)
+    const [blogs, setblogs] = useState<Blog[]>([])
+    const setBlogMap = useSetRecoilState(blogdata)
+
+    useEffect(() => {
+        const token = localStorage.getItem("token")
+        const headers = token ? { Authorization: token } : {}
+
+        axios
+            .get(`${baseurl}/api/v1/blog/my`, { headers })
+            .then((response) => {
+                const list = response.data as Blog[]
+                setblogs(list)
+                setBlogMap((prev) => {
+                    const next = { ...prev }
+                    for (const b of list) {
+                        next[b.id] = b
+                    }
+                    return next
+                })
+                setloading(false)
+            })
+            .catch(() => {
+                setloading(false)
+            })
+    }, [setBlogMap])
+
+    return { loading, blogs }
+}
