@@ -47,13 +47,13 @@ export const Blogs = () => {
                         <h1 className="font-['Cinzel'] text-5xl font-semibold uppercase leading-tight tracking-tight text-[#1d1814] sm:text-6xl">
                             Welcome To
                             <br />
-                            <span className="text-[#c9b89d]">Story</span>Book
+                            <span className="text-[#c9b89d]">Blog</span>Book
                         </h1>
                         <p className="font-['Cormorant_Garamond'] text-sm uppercase tracking-[0.42em] text-[#50483d]">
                             - Volume 2026 -
                         </p>
                         <p className="font-['Cormorant_Garamond'] text-base italic text-[#5c5143]">
-                            Verified stories only . Open to all readers
+                            Verified blogs only . Open to all readers
                         </p>
                     </div>
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
@@ -61,7 +61,7 @@ export const Blogs = () => {
                             href="/publish"
                             className="inline-flex justify-center rounded-full border border-[#ccbda3] bg-[#f3e6cf] px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#ead8b8]"
                         >
-                            Publish your story
+                            Publish your blog
                         </a>
                         <a
                             href="/"

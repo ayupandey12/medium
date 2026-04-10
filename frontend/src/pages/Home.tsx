@@ -23,12 +23,12 @@ export const Home = () => {
                         className="space-y-8"
                     >
                         <div className="inline-flex rounded-full border border-[#d7cab2] bg-[#f3e6cf] px-4 py-2 text-xs uppercase tracking-[0.32em] text-[#4f432f]">
-                            Story-driven writing for every reader
+                            Blog-driven writing for every reader
                         </div>
 
                         <div className="space-y-6">
                             <h1 className="font-[Cinzel] text-5xl font-semibold uppercase leading-tight text-[#1d1914] sm:text-6xl">
-                                Your next favorite story awaits.
+                                Your next favorite blog awaits.
                             </h1>
                             <p className="max-w-2xl text-lg leading-8 text-[#5a4f38]">
                                 Discover thoughtful reads, publish your own voice, and join a modern writing space that feels warm, polished, and easy to use.
@@ -41,20 +41,20 @@ export const Home = () => {
                                 onClick={() => navigate("/blogs")}
                                 className="inline-flex items-center justify-center rounded-full border border-[#4a4339] bg-[#f3e6cf] px-7 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#ead8b8]"
                             >
-                                Explore stories
+                                Explore blogs
                             </button>
                             <button
                                 type="button"
                                 onClick={() => navigate("/publish")}
                                 className="inline-flex items-center justify-center rounded-full bg-[#1c1814] px-7 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-[0_12px_30px_rgba(0,0,0,0.12)] transition hover:bg-[#2f2b28]"
                             >
-                                Publish your story
+                                Publish your blog
                             </button>
                         </div>
 
                         <div className="grid gap-4 sm:grid-cols-2">
                             <div className="rounded-[28px] border border-[#d7cab2] bg-white/90 p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)]">
-                                <p className="text-sm uppercase tracking-[0.24em] text-[#8c7f68]">Verified stories</p>
+                                <p className="text-sm uppercase tracking-[0.24em] text-[#8c7f68]">Verified blogs</p>
                                 <p className="mt-3 text-base leading-7 text-[#4e4438]">Every post is presented in a calm, elegant layout designed for easy reading.</p>
                             </div>
                             <div className="rounded-[28px] border border-[#d7cab2] bg-white/90 p-6 shadow-[0_18px_40px_rgba(0,0,0,0.05)]">
@@ -77,7 +77,7 @@ export const Home = () => {
                                     <p className="text-xs uppercase tracking-[0.28em] text-[#7e6f57]">Featured read</p>
                                     <h2 className="mt-3 text-3xl font-semibold text-[#1f1b17]">A modern writing ritual</h2>
                                     <p className="mt-4 text-sm leading-7 text-[#6a5c46]">
-                                        A clean reading experience, designed to keep the focus on beautiful stories and meaningful ideas.
+                                        A clean reading experience, designed to keep the focus on beautiful blogs and meaningful ideas.
                                     </p>
                                 </div>
 
@@ -88,7 +88,7 @@ export const Home = () => {
                                     </div>
                                     <div className="rounded-3xl border border-[#e6d9c0] bg-[#fff9f0] p-5">
                                         <p className="text-xs uppercase tracking-[0.24em] text-[#8b7d63]">Read</p>
-                                        <p className="mt-3 text-sm leading-6 text-[#5e5240]">Browse stories curated for calm focus and strong storytelling.</p>
+                                        <p className="mt-3 text-sm leading-6 text-[#5e5240]">Browse blogs curated for calm focus and compelling content.</p>
                                     </div>
                                 </div>
 
@@ -104,7 +104,7 @@ export const Home = () => {
                     <div className="rounded-[32px] border border-[#d7cab2] bg-white p-6 shadow-[0_20px_45px_rgba(0,0,0,0.06)]">
                         <p className="text-sm uppercase tracking-[0.24em] text-[#8c7f68]">Engaging</p>
                         <h3 className="mt-4 text-xl font-semibold text-[#1f1b17]">Easy discovery</h3>
-                        <p className="mt-3 text-sm leading-6 text-[#5d5244]">Find the latest stories faster with a pleasant browsing experience.</p>
+                        <p className="mt-3 text-sm leading-6 text-[#5d5244]">Find the latest blogs faster with a pleasant browsing experience.</p>
                     </div>
                     <div className="rounded-[32px] border border-[#d7cab2] bg-white p-6 shadow-[0_20px_45px_rgba(0,0,0,0.06)]">
                         <p className="text-sm uppercase tracking-[0.24em] text-[#8c7f68]">Clean</p>

@@ -53,7 +53,7 @@ export const Publish = () => {
                     image: response.data.image
                 })
             })
-            .catch(() => setErrorMessage("Unable to load story for editing."))
+            .catch(() => setErrorMessage("Unable to load blog for editing."))
     }, [editId])
 
     const uploadImage = () => {
@@ -142,7 +142,7 @@ export const Publish = () => {
                             {isEditMode ? "Update post" : "Create post"}
                         </p>
                         <h1 className="text-4xl font-semibold tracking-tight text-slate-900">
-                            {isEditMode ? "Edit your story" : "Publish your next story"}
+                            {isEditMode ? "Edit your blog" : "Publish your next blog"}
                         </h1>
                         <p className="max-w-2xl text-sm leading-7 text-slate-600">
                             {isEditMode
@@ -164,7 +164,7 @@ export const Publish = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="text-sm font-medium text-slate-700">Story content</label>
+                            <label className="text-sm font-medium text-slate-700">Blog content</label>
                             <TextEditor
                                 value={publish.content}
                                 onChange={(e) => setpublish({ ...publish, content: e.target.value })}
@@ -215,7 +215,7 @@ export const Publish = () => {
                                 disabled={!isFormValid || isSaving}
                                 className="inline-flex items-center justify-center rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-700 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
                             >
-                                {isSaving ? "Saving..." : isEditMode ? "Save story" : "Publish post"}
+                                {isSaving ? "Saving..." : isEditMode ? "Save blog" : "Publish post"}
                             </button>
                         </div>
                     </div>
@@ -239,7 +239,7 @@ function TextEditor({
                 onChange={onChange}
                 rows={10}
                 className="min-h-[240px] w-full resize-none border-0 bg-white px-5 py-4 text-base leading-7 text-slate-900 outline-none placeholder:text-slate-400 focus:ring-0"
-                placeholder="Write your story here..."
+                placeholder="Write your blog here..."
                 required
             />
         </div>

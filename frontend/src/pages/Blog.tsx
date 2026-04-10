@@ -40,12 +40,12 @@ export const Blog = () => {
             <div className="min-h-screen bg-[#efede7] text-[#1d1914]">
                 <Appbar />
                 <main className="mx-auto max-w-5xl px-4 py-16 text-center">
-                    <p className="font-['Cinzel'] text-lg font-semibold uppercase text-[#1d1914]">Story not found.</p>
+                    <p className="font-['Cinzel'] text-lg font-semibold uppercase text-[#1d1914]">Blog not found.</p>
                     <Link
                         to="/blogs"
                         className="mt-6 inline-flex rounded-full border border-[#ccbda3] bg-[#f3e6cf] px-6 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#ead8b8]"
                     >
-                        Back to stories
+                        Back to blogs
                     </Link>
                 </main>
             </div>
@@ -96,7 +96,7 @@ export const Blog = () => {
                             to="/blogs"
                             className="inline-flex items-center rounded-full border border-[#4a4339] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#e6ded0]"
                         >
-                            Back to stories
+                            Back to blogs
                         </Link>
                     </div>
                 </section>

@@ -24,7 +24,7 @@ export const Appbar = () => {
             <div className="mx-auto flex max-w-6xl items-center justify-between rounded-2xl border border-[#c6b99f] bg-[#4b4b4b]/90 px-4 py-3 text-[#f4ead6] shadow-[0_8px_25px_rgba(0,0,0,0.22)] backdrop-blur sm:px-6">
                 <Link to="/" className="flex items-center gap-3">
                     <div className="rounded bg-[#3b3b3b] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f1e4cd]">
-                        StoryBook
+                        BlogBook
                     </div>
                 </Link>
 

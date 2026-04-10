@@ -36,7 +36,7 @@ export const Blogcard = ({
                         className="h-44 w-full object-cover grayscale-0 transition duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-x-0 bottom-0 bg-black/45 px-3 py-2 text-center text-[10px] uppercase tracking-[0.2em] text-[#f4ead7]">
-                        Story File #{id.slice(0, 5)}
+                        Blog File #{id.slice(0, 5)}
                     </div>
                 </div>
 

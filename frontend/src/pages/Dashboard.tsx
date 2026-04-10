@@ -32,7 +32,7 @@ export const Dashboard = () => {
     }
 
     const handleDelete = async (id: string) => {
-        const confirmDelete = window.confirm("Delete this story from your dashboard?")
+        const confirmDelete = window.confirm("Delete this blog from your dashboard?")
         if (!confirmDelete) return
 
         setDeletingIds((prev) => ({ ...prev, [id]: true }))
@@ -49,7 +49,7 @@ export const Dashboard = () => {
             window.location.reload()
         } catch (err) {
             console.error(err)
-            setError("Unable to delete the story. Please try again.")
+            setError("Unable to delete the blog. Please try again.")
             setDeletingIds((prev) => ({ ...prev, [id]: false }))
         }
     }
@@ -61,10 +61,10 @@ export const Dashboard = () => {
                 <section className="border-b border-[#4a4339] pb-8 text-center">
                     <p className="text-sm uppercase tracking-[0.24em] text-[#4e4438]">Your Dashboard</p>
                     <h1 className="mt-4 text-5xl font-[Cinzel] uppercase tracking-tight text-[#1f1a15] sm:text-6xl">
-                        My Stories
+                        My Blogs
                     </h1>
                     <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#4f4337]">
-                        Only posts you created are visible here. Use the dashboard controls to update or delete your own stories.
+                        Only posts you created are visible here. Use the dashboard controls to update or delete your own blogs.
                     </p>
                 </section>
 
@@ -77,12 +77,12 @@ export const Dashboard = () => {
                 <section className="mt-10 space-y-6">
                     {blogs.length === 0 ? (
                         <div className="rounded-3xl border border-[#d8ccb5] bg-[#f7f1e6] p-8 text-center text-[#4f4337] shadow-sm">
-                            <p className="text-lg font-semibold">You haven’t published any stories yet.</p>
+                            <p className="text-lg font-semibold">You haven't published any blogs yet.</p>
                             <Link
                                 to="/publish"
                                 className="mt-4 inline-flex rounded-full border border-[#ccbda3] bg-[#f3e6cf] px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#ead8b8]"
                             >
-                                Publish your first story
+                                Publish your first blog
                             </Link>
                         </div>
                     ) : (
@@ -137,13 +137,13 @@ function DashboardCard({
                         to={`/blog/${blog.id}`}
                         className="rounded-full border border-[#4a4339] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#e6ded0]"
                     >
-                        View story
+                        View blog
                     </Link>
                     <Link
                         to={`/publish?edit=${blog.id}`}
                         className="rounded-full border border-[#ccbda3] bg-[#f3e6cf] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#2f271e] transition hover:bg-[#ead8b8]"
                     >
-                        Edit story
+                        Edit blog
                     </Link>
                     <button
                         type="button"
@@ -151,7 +151,7 @@ function DashboardCard({
                         disabled={deleting}
                         className="rounded-full border border-[#8b3b31] bg-[#a9493d] px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#f9eee8] transition hover:bg-[#923f34] disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                        {deleting ? "Deleting…" : "Delete story"}
+                        {deleting ? "Deleting…" : "Delete blog"}
                     </button>
                 </div>
             </div>
